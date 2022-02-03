@@ -18,11 +18,4 @@ module FormatData
     price.gsub(/\s+/, '').chop
   end
 
-  def get_weight_measurement(weight)
-    weight.delete('0-9')
-  end
-
-  def get_weight_number(weight)
-    weight.delete('^0-9')
-  end
 end
