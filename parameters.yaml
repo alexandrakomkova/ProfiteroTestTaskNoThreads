@@ -1,4 +1,4 @@
-filename: parsingProducts.csv
+filename: parsedProducts.csv
 url: https://www.petsonic.com/farmacia-para-gatos/
 product_per_page: 25
 xpath_name: //h1[@class = "product_main_name"]

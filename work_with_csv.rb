@@ -17,9 +17,9 @@ module WorkWithCSV
   end
 
   def write_to_file(data_to_write, product_name)
-    CSV.open('parsingProducts.csv', 'a+') do |row|
+    CSV.open(WorkWithYaml.read_parameters[0], 'a+') do |row|
       row << data_to_write
     end
-    puts "-----product #{product_name.strip} is written-----\n\n"
+    puts "-----product #{product_name.strip} is written into #{WorkWithYaml.read_parameters[0]}-----\n\n"
   end
 end
