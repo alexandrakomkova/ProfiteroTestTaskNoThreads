@@ -54,7 +54,7 @@ module Parse
 
   def check_products_count(url)
     if WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i.zero?
-      puts WorkWithYaml.read_xpath_parse_parameters_less_25[0].text.to_s
+      puts WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters_less_25[0]).text
     else
       WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     end
