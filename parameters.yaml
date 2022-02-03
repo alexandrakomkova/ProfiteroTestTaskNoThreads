@@ -1,0 +1,9 @@
+filename: parsingProducts.csv
+url: https://www.petsonic.com/farmacia-para-gatos/
+product_per_page: 25
+xpath_name: //h1[@class = "product_main_name"]
+xpath_price_per_weight: //span[@class = "price_comb"]
+xpath_weight_variation: //span[@class = "radio_label"]
+xpath_img: //img[@id = "bigpic"]/@src
+xpath_product_page: //div[@class = "product-desc display_sd"]//@href
+xpath_count_products: //input[@id = "nb_item_bottom"]/@value
