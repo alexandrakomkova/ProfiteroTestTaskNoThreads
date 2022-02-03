@@ -24,4 +24,10 @@ module WorkWithYaml
     parameters = YAML.safe_load(File.open(yaml_filename))
     [parameters['xpath_product_page'], parameters['xpath_count_products']]
   end
+
+  def read_xpath_parse_parameters_less_25
+    yaml_filename = 'parameters.yaml'
+    parameters = YAML.safe_load(File.open(yaml_filename))
+    [parameters['xpath_count_products_less_25']]
+  end
 end

@@ -32,7 +32,10 @@ module Parse
   def parse(url, filename)
     WorkWithCSV.create_file(filename)
     product_per_page = WorkWithYaml.read_parameters[2]
-    count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
+    # count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
+    # if count_products == 0 then get count from product-count
+    count_products = check_products_count(url)
+    puts count_products
     count_pages = (count_products / product_per_page.to_f).ceil
     (1..count_pages).each do |p_counter|
       set_count_products_to_parse(count_products, p_counter, product_per_page, url)
@@ -46,6 +49,14 @@ module Parse
       parse_one_page(count_products, url)
     else
       parse_one_page(product_per_page, url)
+    end
+  end
+
+  def check_products_count(url)
+    if WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i.zero?
+      puts WorkWithYaml.read_xpath_parse_parameters_less_25[0].text.to_s
+    else
+      WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     end
   end
 end
