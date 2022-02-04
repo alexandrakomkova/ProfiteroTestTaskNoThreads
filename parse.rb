@@ -52,5 +52,4 @@ module Parse
       parse_one_page(product_per_page, url)
     end
   end
-
 end
