@@ -34,7 +34,8 @@ module Parse
     product_per_page = WorkWithYaml.read_parameters[2]
     # count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     # if count_products == 0 then get count from product-count
-    count_products = check_products_count(url)
+    # count_products = check_products_count(url)
+    count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     puts count_products
     count_pages = (count_products / product_per_page.to_f).ceil
     (1..count_pages).each do |p_counter|
@@ -52,13 +53,4 @@ module Parse
     end
   end
 
-  def check_products_count(url)
-    if WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i.zero?
-      str = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters_less_25[0]).text
-      # puts str.delete('^0-9')
-      puts str.delete('aA-zZ')
-    else
-      WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
-    end
-  end
 end
