@@ -9,35 +9,6 @@ require_relative 'product'
 module Parse
   module_function
 
-  # def parse_product(product_url)
-  #   html = WorkWithUrl.get_html(product_url)
-  #   product = Product.new(html)
-  #   product.weight_variation.each_with_index do |weight, index|
-  #     WorkWithParsedData.work_with_parsed_data(product.name,
-  #                                              product.img,
-  #                                              weight.text.to_s,
-  #                                              product.price_per_weight[index].text.to_s)
-  #   end
-  # end
-
-  # no threads
-  # def parse_one_page(count_products, url)
-  #   product_page = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[0])
-  #   (0...count_products).each do |product_counter|
-  #     parse_product(product_page[product_counter].to_s.gsub(/\s+/, ''))
-  #   end
-  # end
-
-  # with threads
-  # def parse_one_page(count_products, url)
-  #   product_page = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[0])
-  #   threads = []
-  #   (0...count_products).each do |product_counter|
-  #     threads << Thread.new { parse_product(product_page[product_counter].to_s.gsub(/\s+/, '')) }
-  #   end
-  #   threads.map(&:join)
-  # end
-
   def parse_product(html)
     product = Product.new(html)
     product.weight_variation.each_with_index do |weight, index|
@@ -52,18 +23,11 @@ module Parse
     WorkWithUrl.get_html(product_url)
   end
 
-  def parse_one_page(count_products, url)
+  def download_pages(count_products, url)
     product_page = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[0])
     threads = []
-    pages = []
     (0...count_products).each do |product_counter|
-      threads << Thread.new {
-        # puts "thread num #{product_counter}"
-        download_product_page(product_page[product_counter].to_s.gsub(/\s+/, ''))
-      }
-      # pages[product_counter].push(threads[product_counter])
-      # puts "pages: "+ product_counter.to_s
-      # write_pages_queque(product_counter,count_products)
+      threads << Thread.new { download_product_page(product_page[product_counter].to_s.gsub(/\s+/, '')) }
     end
     pages = threads.map(&:value)
     form_pages_order(pages)
@@ -85,15 +49,15 @@ module Parse
       set_count_products_to_parse(count_products, p_counter, product_per_page, url)
       count_products -= product_per_page
     end
-    puts 'Work is done, check the file.'
   end
 
   def set_count_products_to_parse(count_products, p_counter, product_per_page, url)
+    puts "Page #{p_counter}"
     url = WorkWithUrl.form_page_url(url, p_counter) if p_counter > 1
     if count_products < product_per_page
-      parse_one_page(count_products, url)
+      download_pages(count_products, url)
     else
-      parse_one_page(product_per_page, url)
+      download_pages(product_per_page, url)
     end
   end
 end

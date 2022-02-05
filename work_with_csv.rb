@@ -7,6 +7,7 @@ module WorkWithCSV
   def create_file(filename)
     CSV.open(filename, 'w')
     write_headers_to_file(filename)
+    puts "File #{filename} created"
   end
 
   def write_headers_to_file(filename)
@@ -20,6 +21,6 @@ module WorkWithCSV
     CSV.open(WorkWithYaml.read_parameters[0], 'a+') do |row|
       row << data_to_write
     end
-    puts "-----product #{product_name.strip} is written into #{WorkWithYaml.read_parameters[0]}-----\n\n"
+    puts "-----product #{product_name.strip} is written into #{WorkWithYaml.read_parameters[0]}-----"
   end
 end
