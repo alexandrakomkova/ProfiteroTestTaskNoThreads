@@ -1,5 +1,5 @@
 filename: parsedProducts.csv
-url: https://www.petsonic.com/farmacia-para-gatos/
+url: https://www.petsonic.com/dermatitis-y-problemas-piel-para-perros/
 product_per_page: 25
 xpath_name: //h1[@class = "product_main_name"]
 xpath_price_per_weight: //span[@class = "price_comb"]
