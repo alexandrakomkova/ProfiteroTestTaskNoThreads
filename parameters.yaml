@@ -1,5 +1,3 @@
-filename: parsedProducts.csv
-url: https://www.petsonic.com/dermatitis-y-problemas-piel-para-perros/
 product_per_page: 25
 xpath_name: //h1[@class = "product_main_name"]
 xpath_price_per_weight: //span[@class = "price_comb"]
@@ -7,3 +5,4 @@ xpath_weight_variation: //span[@class = "radio_label"]
 xpath_img: //img[@id = "bigpic"]/@src
 xpath_product_page: //div[@class = "product-desc display_sd"]//@href
 xpath_total_count: //span[@class = "af-total-count"]
+xpath_product_per_page: //input[@id = "af_npp"]/@value

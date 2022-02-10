@@ -6,10 +6,10 @@ module WorkWithYaml
   module_function
 
   # @return [Array]
-  def read_parameters
+  def read_product_per_page
     yaml_filename = 'parameters.yaml'
     parameters = YAML.safe_load(File.open(yaml_filename))
-    [parameters['filename'], parameters['url'], parameters['product_per_page'].to_i]
+    parameters['product_per_page'].to_i
   end
 
   def read_xpath_product_parameters
