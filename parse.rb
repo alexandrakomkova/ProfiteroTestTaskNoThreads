@@ -51,24 +51,33 @@ module Parse
   end
 
   def go_to_next_page(url, page_num)
-    puts "Going to #{page_num} page of products"
+    puts "Start downloading page #{page_num} of products"
     if page_num > 1
       WorkWithUrl.form_page_url(url, page_num)
     else
       url
     end
   end
-  
+
   def write_pages_of_products(pages)
+    threads = []
+    global_array_of_products = []
     pages.each do |page|
-      form_pages_order(page)
+      puts "Writing page #{page} into file"
+      threads << Thread.new { form_pages_order(page, global_array_of_products) }
+    end
+    threads.map(&:value)
+    write_array
+  end
+
+  def form_pages_order(pages, global_array_of_products)
+    pages.each do |html|
+      parse_product(html, global_array_of_products)
     end
   end
 
-  def form_pages_order(pages)
-    pages.each do |html|
-      parse_product(html)
-    end
+  def write_array
+    WorkWithCSV.write_to_file($global_array_of_products)
   end
 end
 
