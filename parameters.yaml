@@ -6,5 +6,3 @@ xpath_img: //img[@id = "bigpic"]/@src
 xpath_product_page: //div[@class='pro_first_box ']//@href
 xpath_total_count: //span[@class = "af-total-count"]
 xpath_product_per_page: //input[@id = "af_npp"]/@value
-xpath:
-  product_urls: //div[@class='pro_first_box ']//@href

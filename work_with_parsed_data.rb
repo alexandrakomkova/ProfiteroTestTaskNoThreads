@@ -10,6 +10,8 @@ module WorkWithParsedData
   def work_with_parsed_data(name, img, weight, price)
     # WorkWithCSV.write_to_file(FormatData.prepare_data_to_write(name, img, weight, price),
     #                           FormatData.form_product_name(name, weight))
-    global_array_of_products << FormatData.prepare_data_to_write(name, img, weight, price)
+    # global_array_of_products << FormatData.prepare_data_to_write(name, img, weight, price)
+    #
+    WorkWithCSV.write_to_file(FormatData.prepare_data_to_write(name, img, weight, price))
   end
 end

@@ -14,7 +14,7 @@ time = Time.now.to_i
 if ARGV.length != 2
   puts 'Enter 2 arguments: url and filename'
 else
-  WorkWithCSV.create_file(ARGV[1])
+  # WorkWithCSV.create_file(ARGV[1])
   Parse.parse(ARGV[0], ARGV[1])
   puts "Work is done, check the file #{ARGV[1]}"
 end

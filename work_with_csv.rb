@@ -17,10 +17,15 @@ module WorkWithCSV
     end
   end
 
-  def write_to_file(data_to_write, product_name)
+  def write_to_file(data_to_write)
     CSV.open(ARGV[1], 'a+') do |row|
       row << data_to_write
     end
-    puts "-----product #{product_name.strip} is written into #{ARGV[1]}-----"
   end
+  # def write_to_file(data_to_write, product_name)
+  #   CSV.open(ARGV[1], 'a+') do |row|
+  #     row << data_to_write
+  #   end
+  #   puts "-----product #{product_name.strip} is written into #{ARGV[1]}-----"
+  # end
 end
