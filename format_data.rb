@@ -10,7 +10,8 @@ module FormatData
   end
 
   def prepare_data_to_write(name, img, weight, price)
-    [form_product_name(name, weight), form_product_price(price),
+    [form_product_name(name, weight),
+     form_product_price(price),
      img]
   end
 

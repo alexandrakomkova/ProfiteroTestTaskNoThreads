@@ -26,7 +26,6 @@ module Parse
       threads << Thread.new { download_product_page(product_url.to_s.gsub(/\s+/, '')) }
     end
     pages = threads.map(&:value)
-    # pages
   end
 
   def download_product_page(product_url)
@@ -35,7 +34,7 @@ module Parse
 
   def parse(url, filename)
     WorkWithCSV.create_file(filename)
-    product_per_page = WorkWithYaml.read_product_per_page
+    product_per_page = WorkWithYaml.read_product_per_page_parameter
     count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     puts "Total count of goods: #{count_products}"
     count_pages = (count_products / product_per_page.to_f).ceil
@@ -43,8 +42,7 @@ module Parse
     (1..count_pages).each do |p_counter|
       threads_set_count << Thread.new { download_pages(form_next_page_url(url, p_counter)) }
     end
-    write_all_products(threads_set_count.map(&:value))
-    # write_pages_of_products(threads_set_count.map(&:value))
+    write_all_products(threads_set_count.map(&:value), filename)
   end
 
   def form_next_page_url(url, page_num)
@@ -56,7 +54,8 @@ module Parse
     end
   end
 
-  def write_all_products(pages)
+  def write_all_products(pages, filename)
+    puts "Start writing all products into the #{filename}"
     pages = pages.flatten
     pages.each do |html|
       parse_product(html)
@@ -69,48 +68,5 @@ module Parse
     end
   end
 end
-  # def write_pages_of_products(pages)
-  #   threads = []
-  #   global_array_of_products = []
-  #   pages.each do |page|
-  #     puts "Writing page #{page} into file"
-  #     threads << Thread.new { form_pages_order(page, global_array_of_products) }
-  #   end
-  #   threads.map(&:value)
-  #   write_array
-  # end
-
-
-  # def write_array
-  #   WorkWithCSV.write_to_file($global_array_of_products)
-  # end
-
-
-  #
-  # def parse(url, filename)
-  #   product_per_page = 25
-  #   count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
-  #   puts "Total count of goods: #{count_products}"
-  #   count_pages = (count_products / product_per_page.to_f).ceil
-  #   threads_set_count = []
-  #   (1..count_pages).each do |p_counter|
-  #     puts "count_products #{count_products}"
-  #     threads_set_count << Thread.new { set_count_products_to_parse(count_products, p_counter, product_per_page, url) }
-  #     sleep(1)
-  #     count_products -= product_per_page
-  #   end
-  #   # pages_per_25 = threads_set_count.map(&:value)
-  #   write_pages_of_products(threads_set_count.map(&:value))
-  # end
-
-  # def set_count_products_to_parse(count_products, p_counter, product_per_page, url)
-  #   puts "Page #{p_counter} downloading... #{count_products}"
-  #   url = WorkWithUrl.form_page_url(url, p_counter) if p_counter > 1
-  #   if count_products < product_per_page
-  #     download_pages(count_products, url)
-  #   else
-  #     download_pages(product_per_page, url)
-  #   end
-  # end
 
 
